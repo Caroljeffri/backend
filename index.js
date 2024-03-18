@@ -11,7 +11,9 @@ const client=new MongoClient(url);
 await client.connect();
 console.log("Db connected Successfully");
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin:"*"
+}));
 const auth= (request,response,next) => {
     try{
         const token=request.header("backend-token");
@@ -68,7 +70,7 @@ if(userfind) {
 } else{
     const salt=await bcrypt.genSalt(10);
     const hashPass=await bcrypt.hash(password,salt);
-   console.log(hashPass);
+  // console.log(hashPass);
    const registerMethod = await client.db("CRUD").collection("private").insertOne({username:username,email:email,password:hashPass});  
    response.status(200).send(registerMethod);
 }
