@@ -11,9 +11,10 @@ const client=new MongoClient(url);
 await client.connect();
 console.log("Db connected Successfully");
 app.use(express.json());
-app.use(cors({
-    origin:"*"
-}));
+// app.use(cors({
+//     origin:"*"
+// }));
+app.use(cors());
 const auth= (request,response,next) => {
     try{
         const token=request.header("backend-token");
